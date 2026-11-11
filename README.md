@@ -48,7 +48,7 @@ Open `/macro`, create a character-specific macro, select the question-mark icon 
 - Warrior stances normally use 1 Battle, 2 Defensive, 3 Berserker. Verify druid form indices on your character before using form conditions.
 - `[@cursor]` specifies ground placement for supported spells; it is not a general `cursor` condition.
 
-**Commands:** `/cast`, `/use`, `/stopcasting`, `/stopattack`, `/startattack`, `/focus`, `/clearfocus`, `/petattack`, `/petpassive`, `/petfollow`, `/equipslot`, `/dismount`, `/cancelaura`, `/stopmacro`.
+**Commands:** `/cast`, `/use`, `/stopcasting`, `/stopattack`, `/startattack`, `/focus`, `/clearfocus`, `/petattack`, `/petpassive`, `/petfollow`, `/petmoveto`, `/equipslot`, `/dismount`, `/cancelaura`, `/stopmacro`.
 
 <br>
 
@@ -73,6 +73,8 @@ Conditions filter an action; they do not wait for it to become usable. Unit sele
 | `group:party` / `group:raid` | Check group type. |
 
 **Reading a line:** commas require all tests; adjacent brackets offer alternatives; a semicolon introduces another action; `[]` accepts normal targeting. A matching option that fails range or cooldown checks does not fall through.
+
+**Avoid redundant checks:** `help`, `harm` and `dead` each imply `exists`; adding `exists` to the same bracket is unnecessary. `@target` is also optional because the current target is the default. Keep `nodead` when you need a living unit: `help` and `harm` do not replace it. Without it, a dead mouseover can match and block the target/self fallback. `nodead` alone does not establish that a unit exists, so pet checks such as `[@pet,exists,nodead]` remain useful.
 
 `!` precedes applicable toggle spells; `#showtooltip` controls button display. Neither is a bracket condition. Keep condition keywords in English; localize spell names and equipment-type values. Confirm your character's form indices.
 
@@ -118,13 +120,13 @@ This announces your **current target**, not your mouseover or focus. Press only 
 
 **WoW Forever changes:** Use Faerie Fire in caster or feral forms. Revive provides out-of-combat resurrection. Use your learned Bear/Dire Bear name in form templates. Shifting and a follow-up ability can need another press after the GCD. See [official Druid changes](https://news.blizzard.com/en-us/article/24301515/world-of-warcraft-forever-class-deep-dives-hunter-and-druid).
 
-Focus: form setup, crowd control and healing without changing targets. Put straightforward abilities such as Barkskin and Shifting Power directly on your action bar.
+Focus: form setup, crowd control and healing without changing targets. Put straightforward abilities such as Barkskin directly on your action bar.
 
 <br>
 
 ### Bash / bear setup
 
-Replace Dire Bear Form with Bear Form if that is what you know. Same requirement applies to Feral Charge.
+Replace Dire Bear Form with Bear Form if that is what you know.
 
 ```text
 #showtooltip Bash
@@ -145,14 +147,13 @@ Repeated presses preserve the active form or attack instead of toggling it off.
 
 <br>
 
-### Feral Charge
+### Feral Charge — Bear / Cat
 
-Requires the talent. Form change may require another press.
+Requires the talent. Use from Bear/Dire Bear or Cat Form: hostile living mouseover → current enemy, preserving your chosen form. Verify Bear is form 1 and Cat is form 3. The Cat version does not interrupt or immobilize; see [Blizzard's Druid changes](https://news.blizzard.com/en-us/article/24301515/world-of-warcraft-forever-class-deep-dives-hunter-and-druid). Use the Feral Charge name from your spellbook if your client labels the form variants separately.
 
 ```text
 #showtooltip Feral Charge
-/cast [noform:1] Dire Bear Form
-/cast [form:1,@mouseover,harm,nodead][form:1,harm,nodead] Feral Charge
+/cast [form:1/3,@mouseover,harm,nodead][form:1/3,harm,nodead] Feral Charge
 ```
 
 <br>
@@ -267,6 +268,18 @@ In Cat Form: Ravage while stealthed with Prowl, otherwise Shred. Position requir
 
 <br>
 
+### Shred / Shifting Power
+
+**Normal:** start attacking a living enemy and use Shred. **Shift:** use your learned Shifting Power talent. Use in Cat Form; Shred's position and resource requirements still apply. Shift does not start auto-attack, but it does not stop an attack already running.
+
+```text
+#showtooltip
+/startattack [nomod:shift,harm,nodead]
+/cast [mod:shift] Shifting Power; [harm,nodead] Shred
+```
+
+<br>
+
 ### Prowl / Cat setup
 
 Verify Cat is form 3. May need another press after shifting.
@@ -324,7 +337,7 @@ Only learned forms; no automatic fallback if the selected form is unavailable.
 
 **WoW Forever changes:** Traps are placed at your own location. Use control and traps separately. Talent-dependent abilities such as Bestial Wrath and Scatter Shot require the appropriate build.
 
-Focus: Auto Shot, pet handling and crowd control. Put Bestial Wrath, Rapid Fire and Freezing Trap directly on your action bar. Place Freezing Trap at your feet on a separate action from Scatter Shot.
+Focus: Auto Shot, pet handling and crowd control. Put Bestial Wrath and Rapid Fire directly on your action bar. Use [shared pet positioning](#pet-positioning) to park or recall your pet. Place Freezing Trap at your feet on a separate action from Scatter Shot.
 
 <br>
 
@@ -417,6 +430,43 @@ Pet recall and stopping attacks reduce accidental breaks; existing damage-over-t
 
 <br>
 
+### Freezing Trap / pet recall
+
+Stops your attacks and recalls your pet before placing the trap at your feet. Existing damage-over-time effects can still break the freeze. Your pet stays Passive until you change its behavior or give another attack command.
+
+```text
+#showtooltip Freezing Trap
+/stopcasting
+/stopattack
+/petpassive
+/petfollow
+/cast Freezing Trap
+```
+
+<br>
+
+### Aspects: Hawk / Cheetah / Monkey
+
+**Normal:** Hawk. **Shift:** Cheetah. **Ctrl:** Monkey. Requires the chosen aspect; repeated presses preserve it.
+
+```text
+#showtooltip
+/cast [mod:ctrl] !Aspect of the Monkey; [mod:shift] !Aspect of the Cheetah; !Aspect of the Hawk
+```
+
+<br>
+
+### Cancel travel aspects
+
+Remove your own Cheetah or Pack before taking hits, without casting another aspect. This does not remove an existing daze or another Hunter's Pack.
+
+```text
+/cancelaura Aspect of the Cheetah
+/cancelaura Aspect of the Pack
+```
+
+<br>
+
 ### Revive / Call / Mend Pet
 
 Shift forces Revive Pet when a dead/despawned pet is not exposed as a pet unit.
@@ -430,11 +480,11 @@ Shift forces Revive Pet when a dead/despawned pet is not exposed as a pet unit.
 
 ### Pet attack / recall
 
-Shift recalls even when an enemy remains selected.
+Normal press sends your pet to a hostile living mouseover, otherwise your current enemy. Shift recalls even when an enemy remains selected. For ground placement, use [shared pet positioning](#pet-positioning).
 
 ```text
 #showtooltip
-/petattack [nomod,harm,nodead]
+/petattack [nomod:shift,@mouseover,harm,nodead][nomod:shift,harm,nodead]
 /petpassive [mod:shift]
 /petfollow [mod:shift]
 ```
@@ -1206,7 +1256,7 @@ Requires the Restoration talent. Riptide provides healing over time, without an 
 
 **WoW Forever changes:** Banes and utility Curses are separate choices; use the learned Bane names. See [Warlock changes](https://news.blizzard.com/en-gb/article/24310968/world-of-warcraft-forever-class-deep-dives-rogue-and-warlock).
 
-Focus: crowd control, pet utility and applying damage without changing targets. Use normal buttons for Rain of Fire and Voidwalker Sacrifice; use the universal pet recall button when needed.
+Focus: crowd control, pet utility and applying damage without changing targets. Use normal buttons for Rain of Fire and Voidwalker Sacrifice; use [shared pet positioning](#pet-positioning) to park your demon or recall it.
 
 <br>
 
@@ -1701,6 +1751,24 @@ Set your tank or caller as focus first. This changes your selected target.
 
 <br>
 
+<a id="pet-positioning"></a>
+
+### Pet positioning / recall — all pet classes
+
+For Hunters, Warlocks and other characters with a controllable pet. **Normal:** put the pet on Passive and open a ground reticle; click where it should move. **Shift:** recall it instead. Useful for moving a pet away from patrols or hazards without sending it to attack. Temporary guardians without pet commands cannot use this.
+
+```text
+/stopmacro [nopet][@pet,dead]
+/petpassive
+/petfollow [mod:shift]
+/stopmacro [mod:shift]
+/petmoveto
+```
+
+The pet remains Passive; give an explicit attack command or restore your preferred pet behavior afterward. Click the destination yourself. See [Gladius Gaming's Forever pet-control examples](https://mobalytics.gg/wow-forever/classes/forever-solo-hunter-gladius-gaming).
+
+<br>
+
 ### Emergency pet recall
 
 For pet classes; does not cancel existing damage-over-time effects.
@@ -1912,6 +1980,8 @@ These sources document game behavior; they do not certify every macro here.
 
 ### Additional macro reading
 
+- [Epiccarry Forever Hunter macros](https://epiccarry.com/blogs/wow-forever-best-hunter-macros/) — reviewed for pet positioning, mouseover attacks, trap control and aspect shortcuts. Adapted selectively; existing shot, feeding and revival macros already cover much of the guide.
+- [Gladius Gaming's Forever Hunter guide](https://mobalytics.gg/wow-forever/classes/forever-solo-hunter-gladius-gaming) — player-authored examples of `/petmoveto` and pet-safe control.
 - [Mmonster Forever macro guide](https://mmonster.co/wow-forever/guides/macros) — compared for missing shortcuts and condition-table organization. Third-party guidance, not Blizzard certification. Existing healing, control and pet macros cover most examples; modifiers avoid redundant buff sequences and automatic trinket use.
 
 <br>
