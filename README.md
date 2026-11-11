@@ -147,6 +147,17 @@ Repeated presses preserve the active form or attack instead of toggling it off.
 
 <br>
 
+### Re-enter Bear / Cat Form — roots and slows
+
+Re-enter your current feral form to clear removable roots and slows. Acts only in Bear/Dire Bear or Cat Form. Verify Bear is form 1 and Cat is form 3; replace Dire Bear Form with Bear Form if needed. Each press spends shifting resources, so keep this separate from normal attacks. Adapted from [Method's Forever Druid guide](https://www.method.gg/wow-forever/class-guides/feral-tank-druid/interface-addons-and-macros).
+
+```text
+#showtooltip
+/cast [form:1] Dire Bear Form; [form:3] Cat Form
+```
+
+<br>
+
 ### Feral Charge — Bear / Cat
 
 Requires the talent. Use from Bear/Dire Bear or Cat Form: hostile living mouseover → current enemy, preserving your chosen form. Verify Bear is form 1 and Cat is form 3. The Cat version does not interrupt or immobilize; see [Blizzard's Druid changes](https://news.blizzard.com/en-us/article/24301515/world-of-warcraft-forever-class-deep-dives-hunter-and-druid). Use the Feral Charge name from your spellbook if your client labels the form variants separately.
@@ -491,6 +502,29 @@ Normal press sends your pet to a hostile living mouseover, otherwise your curren
 
 <br>
 
+### Growl autocast — enable / disable
+
+**Normal:** enable Growl autocast. **Shift:** disable it when another tank should hold enemies. Repeated presses preserve your chosen setting. Requires a pet with Growl; check the pet-bar autocast indicator and insert the learned rank if your client requires it. This changes autocast, not the pet's attack target.
+
+```text
+#showtooltip Growl
+/petautocaston [nomod:shift] Growl
+/petautocastoff [mod:shift] Growl
+```
+
+<br>
+
+### Eagle Eye scouting
+
+Recast Eagle Eye from the current scouting view rather than returning to your character. Click each new ground destination yourself. Useful for checking distant areas and searching for rare beasts; loading and zone limits still apply. See [Gladius Gaming's Forever scouting example](https://mobalytics.gg/wow-forever/classes/forever-solo-hunter-gladius-gaming).
+
+```text
+#showtooltip Eagle Eye
+/cast !Eagle Eye
+```
+
+<br>
+
 ### Feed Pet — item template
 
 Replace YOUR PET FOOD with an appropriate food from your bags. Verify Feed Pet exists and the pet diet accepts it.
@@ -547,6 +581,18 @@ Does not interrupt an existing channel when pressed again.
 ```text
 #showtooltip
 /cast [mod:shift] Conjure Food; Conjure Water
+```
+
+<br>
+
+### Emergency Blink
+
+Interrupt your current cast or channel to attempt Blink immediately. Normal cooldown and movement restrictions still apply; this does not cancel Ice Block.
+
+```text
+#showtooltip Blink
+/stopcasting
+/cast Blink
 ```
 
 <br>
@@ -715,6 +761,17 @@ Friendly mouseover → friendly target → self, without changing your selected 
 
 <br>
 
+### Hammer of Justice
+
+Hostile living mouseover → hostile living focus → current enemy, without changing your selected target. Range, cooldown and stun immunity still apply.
+
+```text
+#showtooltip Hammer of Justice
+/cast [@mouseover,harm,nodead][@focus,harm,nodead][harm,nodead] Hammer of Justice
+```
+
+<br>
+
 ### Holy Strike
 
 Starts melee auto-attacks even when the ability cannot fire yet. Choose a valid enemy first.
@@ -820,6 +877,28 @@ Friendly mouseover → friendly target → self, without changing your selected 
 
 <br>
 
+### Smite / Flash Heal — target-based
+
+Smite on a hostile target; otherwise Flash Heal using normal targeting and auto-self-cast settings. This compact version uses your selected target, not mouseover.
+
+```text
+#showtooltip
+/cast [harm] Smite; Flash Heal
+```
+
+<br>
+
+### Holy Fire / Smite / Flash Heal — modifiers
+
+**Ctrl:** Holy Fire on a living enemy. **Shift:** Smite on a living enemy. **No modifier:** Flash Heal using normal targeting and auto-self-cast settings. Ctrl takes priority when Ctrl and Shift are held together. Alt alone does nothing; ensure modified key bindings do not intercept the macro.
+
+```text
+#showtooltip
+/cast [mod:ctrl,harm,nodead] Holy Fire; [mod:shift,nomod:ctrl,harm,nodead] Smite; [nomod] Flash Heal
+```
+
+<br>
+
 ### Greater Heal
 
 Friendly mouseover → friendly target → self, without changing your selected target.
@@ -860,6 +939,17 @@ Friendly mouseover → friendly target → self, without changing your selected 
 ```text
 #showtooltip Renew
 /cast [@mouseover,help,nodead][help,nodead][@player] Renew
+```
+
+<br>
+
+### Abolish Disease
+
+Friendly living mouseover → friendly living target → self. Before learning Abolish Disease, replace its name in both lines with Cure Disease.
+
+```text
+#showtooltip Abolish Disease
+/cast [@mouseover,help,nodead][help,nodead][@player] Abolish Disease
 ```
 
 <br>
@@ -1070,6 +1160,17 @@ Ignores friendly mouseover and focus units when choosing an enemy.
 
 <br>
 
+### Distract — cursor / manual placement
+
+**Normal:** place Distract at the ground under your cursor immediately. **Shift:** open the targeting reticle so you can aim before clicking. Keep your cursor over the intended ground location; normal spell restrictions still apply. Test cursor placement in your client before relying on it.
+
+```text
+#showtooltip Distract
+/cast [mod:shift] Distract; [@cursor] Distract
+```
+
+<br>
+
 ### Pick Pocket
 
 Choose a pickpocketable target manually; preserves it rather than clearing it.
@@ -1078,6 +1179,20 @@ Choose a pickpocketable target manually; preserves it rather than clearing it.
 #showtooltip Pick Pocket
 /cast [stealth,harm,nodead] Pick Pocket
 ```
+
+<br>
+
+### Pick Pocket / stealth opener
+
+Use while stealthed and in range of a pickpocketable enemy. Attempts Pick Pocket before Cheap Shot. Replace **Cheap Shot in both lines** with **Garrote** or **Ambush** to use another opener; its normal weapon and position requirements still apply.
+
+```text
+#showtooltip Cheap Shot
+/cast Pick Pocket
+/cast Cheap Shot
+```
+
+Enable Auto Loot. The macro does not wait for looting to finish, so test it in-game; use the separate Pick Pocket button above if loot is missed. Do not add `/startattack` before the opener. [Player reports on opener and looting timing](https://eu.forums.blizzard.com/en/wow/t/pick-pocket-macro/91846).
 
 <br>
 
@@ -1223,6 +1338,17 @@ Requires the talent; another press may be needed if the current GCD prevents the
 
 <br>
 
+### Cure Poison / Cure Disease
+
+**Normal:** Cure Poison. **Shift:** Cure Disease. Both select a friendly living mouseover, then a friendly living target, then self. Choose the dispel type yourself; the macro does not inspect debuffs or switch spells when there is nothing to remove.
+
+```text
+#showtooltip
+/cast [mod:shift,@mouseover,help,nodead][mod:shift,help,nodead][mod:shift,@player] Cure Disease; [@mouseover,help,nodead][help,nodead][@player] Cure Poison
+```
+
+<br>
+
 ### Purge
 
 Dispels a hostile mouseover, otherwise your current enemy.
@@ -1312,6 +1438,17 @@ Requires the talent and summoning resources. Replace Voidwalker with a learned d
 #showtooltip Summon Voidwalker
 /cast Fel Domination
 /cast Summon Voidwalker
+```
+
+<br>
+
+### Devour Magic — defensive dispel
+
+Requires a living Felhunter with Devour Magic. **Shift:** dispel yourself. Otherwise friendly living mouseover → friendly living target → self. This template is for defensive dispels. Disable Devour Magic autocast on the pet bar if you want to reserve its cooldown for manual use; insert the learned rank if your client requires it.
+
+```text
+#showtooltip Devour Magic
+/cast [mod:shift,@player][@mouseover,help,nodead][help,nodead][@player] Devour Magic
 ```
 
 <br>
@@ -1495,12 +1632,12 @@ Prepares the required stance, then attempts the ability. Press again after the s
 
 ### Disarm
 
-Prepares the required stance, then attempts the ability. Press again after the stance change if needed.
+Prepares Defensive Stance, then attempts Disarm on a hostile living mouseover or your current enemy without changing targets. Press again after the stance change if needed. Range, Rage and disarm immunity still apply.
 
 ```text
 #showtooltip Disarm
 /cast [nostance:2] Defensive Stance
-/cast Disarm
+/cast [stance:2,@mouseover,harm,nodead][stance:2,harm,nodead] Disarm
 ```
 
 <br>
@@ -1980,6 +2117,8 @@ These sources document game behavior; they do not certify every macro here.
 
 ### Additional macro reading
 
+- [Method's Forever Druid macros](https://www.method.gg/wow-forever/class-guides/feral-tank-druid/interface-addons-and-macros) — form re-entry for roots and slows.
+- [Player-authored pet autocast examples on Blizzard forums](https://us.forums.blizzard.com/en/wow/t/macros-condensing-your-physical-keys/16422) — reference for `/petautocaston` and `/petautocastoff`; older examples are not a Forever compatibility guarantee.
 - [Epiccarry Forever Hunter macros](https://epiccarry.com/blogs/wow-forever-best-hunter-macros/) — reviewed for pet positioning, mouseover attacks, trap control and aspect shortcuts. Adapted selectively; existing shot, feeding and revival macros already cover much of the guide.
 - [Gladius Gaming's Forever Hunter guide](https://mobalytics.gg/wow-forever/classes/forever-solo-hunter-gladius-gaming) — player-authored examples of `/petmoveto` and pet-safe control.
 - [Mmonster Forever macro guide](https://mmonster.co/wow-forever/guides/macros) — compared for missing shortcuts and condition-table organization. Third-party guidance, not Blizzard certification. Existing healing, control and pet macros cover most examples; modifiers avoid redundant buff sequences and automatic trinket use.
