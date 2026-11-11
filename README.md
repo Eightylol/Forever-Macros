@@ -2117,11 +2117,12 @@ These sources document game behavior; they do not certify every macro here.
 
 ### Additional macro reading
 
-- [Method's Forever Druid macros](https://www.method.gg/wow-forever/class-guides/feral-tank-druid/interface-addons-and-macros) — form re-entry for roots and slows.
+- [Wowhead: Beginner's guide to writing macros in WoW Forever](https://www.wowhead.com/forever/guide/beginners-guide-to-writing-macros-in-wow-forever-34950)
+- [Warcraft Wiki: Making a macro](https://warcraft.wiki.gg/wiki/Making_a_macro)
+- [Wowpedia: Macro commands](https://wowpedia.fandom.com/wiki/Macro_commands)
+- [Macros: Essential Information — Blizzard forums](https://us.forums.blizzard.com/en/wow/t/macros-essential-information/21139) — community-authored, general WoW guidance, not a Forever-specific certification.
 - [Player-authored pet autocast examples on Blizzard forums](https://us.forums.blizzard.com/en/wow/t/macros-condensing-your-physical-keys/16422) — reference for `/petautocaston` and `/petautocastoff`; older examples are not a Forever compatibility guarantee.
-- [Epiccarry Forever Hunter macros](https://epiccarry.com/blogs/wow-forever-best-hunter-macros/) — reviewed for pet positioning, mouseover attacks, trap control and aspect shortcuts. Adapted selectively; existing shot, feeding and revival macros already cover much of the guide.
-- [Gladius Gaming's Forever Hunter guide](https://mobalytics.gg/wow-forever/classes/forever-solo-hunter-gladius-gaming) — player-authored examples of `/petmoveto` and pet-safe control.
-- [Mmonster Forever macro guide](https://mmonster.co/wow-forever/guides/macros) — compared for missing shortcuts and condition-table organization. Third-party guidance, not Blizzard certification. Existing healing, control and pet macros cover most examples; modifiers avoid redundant buff sequences and automatic trinket use.
+
 
 <br>
 
@@ -2133,7 +2134,6 @@ These sources document game behavior; they do not certify every macro here.
 - [Paladin](https://news.blizzard.com/en-us/article/24302099/world-of-warcraft-forever-class-deep-dives-paladin)
 - [Rogue and Warlock](https://news.blizzard.com/en-gb/article/24310968/world-of-warcraft-forever-class-deep-dives-rogue-and-warlock)
 - [Official development notes, updated November 2](https://us.forums.blizzard.com/en/wow/t/2360696)
-- [Macro syntax reference by its author on Blizzard forums](https://us.forums.blizzard.com/en/wow/t/macros-essential-information/21139) — community-authored, general WoW guidance, not a Forever-specific certification.
 
 ---
 
