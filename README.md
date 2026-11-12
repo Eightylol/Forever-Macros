@@ -122,6 +122,8 @@ This announces your **current target**, not your mouseover or focus. Press only 
 
 Focus: form setup, crowd control and healing without changing targets. Put straightforward abilities such as Barkskin directly on your action bar.
 
+**Form numbers follow the buttons on your shapeshift bar, from left to right.** `form:3` means the third form button, not always Cat Form. With Bear, Aquatic and Cat learned, Cat is form 3. If you have not learned Aquatic Form, Cat is the second button, so use `form:2` instead. Adjust every Cat Form condition in these templates, including `noform:3` and the Cat entry in `form:1/3`, to match your own bar.
+
 <br>
 
 ### Bash / bear setup
@@ -806,13 +808,13 @@ Heal a friendly mouseover or target; otherwise damage your enemy target. Require
 
 <br>
 
-### Seal / Judgement
+### Seal of Fury / Seal of Righteousness — weapon choice
 
-Shift applies the seal. Normal press judges the currently active seal without consuming it.
+**One-handed weapon:** Seal of Fury. **Two-handed weapon:** Seal of Righteousness. Press after changing weapons to apply the matching seal; equipment changes do not cast it automatically. Learn both seals and localize the equipment-type names for your client. Use Judgement separately, since it does not consume your seal.
 
 ```text
 #showtooltip
-/cast [mod:shift] Seal of Righteousness; [harm,nodead] Judgement
+/cast [worn:One-Hand] Seal of Fury; [worn:Two-Hand] Seal of Righteousness
 ```
 
 <br>
@@ -1109,6 +1111,18 @@ Starts melee auto-attacks even when the ability cannot fire yet. Choose a valid 
 #showtooltip Sinister Strike
 /startattack [nostealth,harm,nodead]
 /cast Sinister Strike
+```
+
+<br>
+
+### Sinister Strike / Shank — optional alternative
+
+**Normal:** Sinister Strike. **Shift:** Shank. Both require a living enemy and are disabled while stealthed to preserve your opener. Use this instead of the separate Sinister Strike macro if you prefer a shared key. Learn Shank and equip the required weapons; time it when you have room for its Energy return. This selects one ability per press, without automatically checking cooldowns or Energy.
+
+```text
+#showtooltip
+/startattack [nostealth,harm,nodead]
+/cast [nostealth,mod:shift,harm,nodead] Shank; [nostealth,nomod:shift,harm,nodead] Sinister Strike
 ```
 
 <br>
@@ -1531,7 +1545,19 @@ Bane and utility Curse are separate choices; do not automatically alternate them
 
 **WoW Forever changes:** Stance changes, weapon swaps, Rage, range and GCDs can require additional presses. Use your own equipment names.
 
-Focus: stance preparation, starting melee attacks and tank utility. Use normal buttons for shouts, Bloodrage, Thunder Clap and Victory Rush. Stance changes may require another press and can affect your Rage.
+Focus: stance preparation, starting melee attacks and tank utility. Use normal buttons for shouts, Bloodrage and Thunder Clap. Stance changes may require another press and can affect your Rage.
+
+<br>
+
+### Victory Rush
+
+Starts melee auto-attacks against your current living enemy and attempts Victory Rush. Its qualifying-kill requirement, cooldown and melee range still apply. Keep this on a dedicated button to choose when to use the heal; pressing it while Victory Rush is unavailable still starts auto-attacking.
+
+```text
+#showtooltip Victory Rush
+/startattack [harm,nodead]
+/cast [harm,nodead] Victory Rush
+```
 
 <br>
 
